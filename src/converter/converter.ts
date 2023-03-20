@@ -183,6 +183,10 @@ export function getBlockPositionOnGrid(blockType: BlockType, slotPosition: numbe
   const halfWidth = (blockSize.width - 1) / 2;
   const isWideBlock = blockSize.width > 1;
 
+  if (grid[grid.length - 1][slotPosition] !== 0) {
+    throw Error('Height boundary is intruded.');
+  }
+
   const allowPosition = { x: slotPosition, y: grid.length - 1 };
 
   for (let rowIndex = grid.length - 1; rowIndex >= 0; rowIndex--) {
@@ -212,7 +216,11 @@ function isSpaceEnoughForWideBlock(grid: Grid, rowIndex: number, slotPosition: n
   // Check left and right side of a wide block that it is empty
   for (let j = 1; j <= halfWidth; j++) {
     const isBoundaryIntruded = slotPosition - j < 0 || slotPosition + j > grid[0].length - 1;
-    if (isBoundaryIntruded || grid[rowIndex][slotPosition - j] !== 0 || grid[rowIndex][slotPosition + j] !== 0) {
+    if (isBoundaryIntruded) {
+      throw Error('Width boundary is intruded.')
+    }
+
+    if (grid[rowIndex][slotPosition - j] !== 0 || grid[rowIndex][slotPosition + j] !== 0) {
       isEmpty = false;
       break;
     }
@@ -249,6 +257,10 @@ function placeBlockOnGrid(
   }
   if (isTallBlock) {
     for (let j = 1; j < blockSize.height; j++) {
+      const isBoundaryIntruded = allowPosition.y + j > grid.length - 1;
+      if (isBoundaryIntruded) {
+        throw Error('Height boundary is intruded.')
+      }
       newGrid[allowPosition.y + j][slotPosition] = 1;
     }
   }
