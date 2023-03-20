@@ -217,7 +217,7 @@ function isSpaceEnoughForWideBlock(grid: Grid, rowIndex: number, slotPosition: n
   for (let j = 1; j <= halfWidth; j++) {
     const isBoundaryIntruded = slotPosition - j < 0 || slotPosition + j > grid[0].length - 1;
     if (isBoundaryIntruded) {
-      throw Error('Width boundary is intruded.')
+      throw Error('Width boundary is intruded.');
     }
 
     if (grid[rowIndex][slotPosition - j] !== 0 || grid[rowIndex][slotPosition + j] !== 0) {
@@ -259,7 +259,7 @@ function placeBlockOnGrid(
     for (let j = 1; j < blockSize.height; j++) {
       const isBoundaryIntruded = allowPosition.y + j > grid.length - 1;
       if (isBoundaryIntruded) {
-        throw Error('Height boundary is intruded.')
+        throw Error('Height boundary is intruded.');
       }
       newGrid[allowPosition.y + j][slotPosition] = 1;
     }
