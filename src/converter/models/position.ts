@@ -1,5 +1,11 @@
-import BigNumber from "bignumber.js";
+import BigNumber from 'bignumber.js';
 
+/**
+ * Position represents the position of the block in the grid
+ * @class
+ * @property {BigNumber} x - x position of the block
+ * @property {BigNumber} y - y position of the block
+ */
 export class Position {
   x: BigNumber;
   y: BigNumber;

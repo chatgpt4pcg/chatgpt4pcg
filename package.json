@@ -1,15 +1,14 @@
 {
   "name": "chatgpt4pcg",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "This package contains a comprehensive set of utility functions utilized in scripts for the competition's evaluation process.",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "scripts": {
-    "doc": "typedoc --out docs src/index.ts",
+    "doc": "typedoc --out docs src/index.ts src/converter/converter.ts",
     "build": "tsc",
     "format": "prettier --write \"src/**/*.ts\" \"src/**/*.js\"",
     "prepare": "npm run build && npm run doc",
-    "preversion": "npm run lint",
     "version": "npm run format && git add -A src",
     "postversion": "git push && git push --tags"
   },
