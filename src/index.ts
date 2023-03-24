@@ -48,6 +48,26 @@ export function countWords(text: string): number {
 }
 
 /**
+ * This function is used to check if the text contains disallowed characters
+ * @param text text to check for disallowed characters
+ * @returns true if the text contains disallowed characters, false otherwise
+ */
+export function containDisallowedCharacters(text: string): boolean {
+  const PATTERN = /([A-Za-z\d~/\\+,\-*`'".!@#$%^&()_=[\]{}|<>:;?— \n\r\t]*)*/g
+  return text.replaceAll(PATTERN, '').trim().length !== 0;
+}
+
+/**
+ * This function is used to check if the text contains <OBJECT> tokens
+ * @param text text to check for <OBJECT> tokens
+ * @returns true if the text contains object tokens, false otherwise
+ */
+export function containObjectTokens(text: string): boolean {
+  const PATTERN = /<OBJECT>/g;
+  return (text.match(PATTERN)?.length || -1) > 0;
+}
+
+/**
  * This function is used to convert text of only `ab_drop()` functions to XML file used in Science Birds
  * @param text text of only `ab_drop()` functions to convert to XML
  * @returns XML file represents a level in the Science Birds
