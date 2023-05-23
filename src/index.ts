@@ -53,7 +53,7 @@ export function countWords(text: string): number {
  * @returns true if the text contains disallowed characters, false otherwise
  */
 export function containDisallowedCharacters(text: string): boolean {
-  const PATTERN = /([A-Za-z\d~/\\+,\-*`'".!@#$%^&()_=[\]{}|<>:;?— \n\r\t]*)*/g
+  const PATTERN = /([A-Za-z\d~/\\+,\-*`'".!@#$%^&()_=[\]{}|<>:;?—\u201C\u201D\u2018\u2019 \n\r\t]*)*/g;
   return text.replaceAll(PATTERN, '').trim().length !== 0;
 }
 
