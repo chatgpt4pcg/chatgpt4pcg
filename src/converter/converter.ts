@@ -19,11 +19,6 @@ export const GRID_WIDTH = 20;
 export const GRID_HEIGHT = 16;
 
 /**
- * Function prefix for `ab_drop` function calls
- */
-export const FUNCTION_PREFIX = 'ab_drop(';
-
-/**
  * Width of the one cell of a grid in Unity
  */
 export const ONE_CELL_WIDTH_IN_UNITY = new BigNumber('0.2401');
@@ -117,20 +112,20 @@ export function shiftBlocksOnGrid(blocks: Array<Block>, grid: Grid): [Array<Bloc
 
 /**
  * This function is used to get the blocks with their positions on the grid
- * @param functionsString string of `ab_drop()` functions
+ * @param functionsString string of `functionPrefix()` functions
  * @returns an array of `Block`'s blocks with their positions on the grid
  */
-export function getBlocksWithPosition(functionsString: string): [Array<Block>, Grid] {
+export function getBlocksWithPosition(functionsString: string, functionPrefix = "ab_drop("): [Array<Block>, Grid] {
   const blocks = [];
   let grid = initializeGrid(GRID_WIDTH, GRID_HEIGHT);
 
   const lines = functionsString.split('\n');
   for (const line of lines) {
-    if (line.substring(0, FUNCTION_PREFIX.length) !== FUNCTION_PREFIX) {
+    if (!line.startsWith(functionPrefix)) {
       continue;
     }
 
-    const blockType = getBlockTypeFromLine(line);
+    const blockType = getBlockTypeFromLine(line, functionPrefix);
     const slotPosition = getSlotPositionFromLine(line);
     const block = Block.getAvailableBlock(blockType);
 
@@ -145,20 +140,20 @@ export function getBlocksWithPosition(functionsString: string): [Array<Block>, G
 }
 
 /**
- * This function is used to get the block type from the line of `ab_drop()` function
- * @param line line of `ab_drop()` function
+ * This function is used to get the block type from the line of `functionPrefix()` function
+ * @param line line of `functionPrefix()` function
  * @returns the block type of the block
  */
-function getBlockTypeFromLine(line: string): BlockType {
+function getBlockTypeFromLine(line: string, functionPrefix = "ab_drop("): BlockType {
   const commaIndex = line.indexOf(',');
-  const extractedBlockType = line.substring(FUNCTION_PREFIX.length + 1, commaIndex - 1).toUpperCase();
+  const extractedBlockType = line.substring(functionPrefix.length + 1, commaIndex - 1).toUpperCase();
   const blockType = BlockType[extractedBlockType as keyof typeof BlockType];
   return blockType;
 }
 
 /**
- * This function is used to get the slot position from the line of `ab_drop()` function
- * @param line line of `ab_drop()` function
+ * This function is used to get the slot position from the line of `functionPrefix()` function
+ * @param line line of `functionPrefix()` function
  * @returns the slot position of the block
  */
 function getSlotPositionFromLine(line: string): number {

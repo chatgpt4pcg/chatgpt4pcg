@@ -7,13 +7,13 @@ import wordsCount from 'words-count';
 export { Block, Position, Size, BlockType };
 
 /**
- *  This function is used to extract `ab_drop` function calls from the text
- * @param text text containing `ab_drop` function calls
- * @returns a new string containing only the `ab_drop` function calls
+ *  This function is used to extract `functionPrefix` function calls from the text
+ * @param text text containing `functionPrefix` function calls
+ * @returns a new string containing only the `functionPrefix` function calls
  */
-export function extractCode(text: string): string | null {
+export function extractCode(text: string, functionPrefix = "ab_drop"): string | null {
   const PATTERN = /```([^`]+)```/g;
-  const CODE_PATTERN = /ab_drop\(['|"]b[1|3][1|3]['|"], *\d*\)/g;
+  const CODE_PATTERN = new RegExp(`${functionPrefix}\\(['|"]b[1|3][1|3]['|"], *\\d*\\)`, "g");
 
   let match;
   let lastMatch = null;
@@ -64,21 +64,21 @@ export function containDisallowedCharacters(text: string): boolean {
  */
 export function containObjectTokens(text: string): boolean {
   const PATTERN = /<OBJECT>/g;
-  return (text.match(PATTERN)?.length || -1) > 0;
+  return (text.match(PATTERN)?.length ?? -1) > 0;
 }
 
 /**
- * This function is used to convert text of only `ab_drop()` functions to XML file used in Science Birds
- * @param text text of only `ab_drop()` functions to convert to XML
+ * This function is used to convert text of only `functionPrefix()` functions to XML file used in Science Birds
+ * @param text text of only `functionPrefix()` functions to convert to XML
  * @returns XML file represents a level in the Science Birds
  */
-export function convertTextToXML(text: string) {
-  return convertToXML(text.toLowerCase());
+export function convertTextToXML(text: string, functionPrefix = "ab_drop(") {
+  return convertToXML(text.toLowerCase(), functionPrefix);
 }
 
 /**
- * This function is used to convert text of only `ab_drop()` functions to an array of `Block`'s blocks with their positions on the grid
- * @param text text of only `ab_drop()` functions to convert to blocks
+ * This function is used to convert text of only `functionPrefix()` functions to an array of `Block`'s blocks with their positions on the grid
+ * @param text text of only `functionPrefix()` functions to convert to blocks
  * @returns an array of `Block`'s blocks with their positions on the grid
  */
 export function convertTextToBlocks(text: string) {

@@ -10,9 +10,9 @@ import {
 
 import BigNumber from 'bignumber.js';
 
-function convertToXML(functionsString: string) {
+function convertToXML(functionsString: string, functionPrefix = "ab_drop(") {
   let output = '<?xml version="1.0" encoding="utf-16"?>\n';
-  const [gameObjectsXMLString, grid] = parseGameObjects(functionsString);
+  const [gameObjectsXMLString, grid] = parseGameObjects(functionsString, functionPrefix);
   const levelWidth = getGridContentWidth(grid);
   const levelHeight = getGridContentHeight(grid);
 
@@ -31,11 +31,11 @@ function convertToXML(functionsString: string) {
   return output;
 }
 
-function parseGameObjects(functionsString: string): [string, number[][], number[][]] {
+function parseGameObjects(functionsString: string, functionPrefix = "ab_drop("): [string, number[][], number[][]] {
   let xmlString = '';
   xmlString += `  <GameObjects>\n`;
 
-  const [tempBlocks, gridBeforeShift] = getBlocksWithPosition(functionsString);
+  const [tempBlocks, gridBeforeShift] = getBlocksWithPosition(functionsString, functionPrefix);
   const [blocks, grid] = shiftBlocksOnGrid(tempBlocks, gridBeforeShift);
 
   for (const block of blocks) {
@@ -56,9 +56,8 @@ function parseGameObjects(functionsString: string): [string, number[][], number[
       .plus(yBlockCenter)
       .plus(STRUCTURE_STARTING_POSITION.y);
 
-    xmlString += `    <Block type="${
-      block.type
-    }" material="wood" x="${xPosition.toFixed()}" y="${yPosition.toFixed()}" rotation="${block.rotation}" />\n`;
+    xmlString += `    <Block type="${block.type
+      }" material="wood" x="${xPosition.toFixed()}" y="${yPosition.toFixed()}" rotation="${block.rotation}" />\n`;
   }
 
   xmlString += `  </GameObjects>\n`;
