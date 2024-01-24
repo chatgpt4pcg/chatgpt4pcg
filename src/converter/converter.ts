@@ -115,7 +115,7 @@ export function shiftBlocksOnGrid(blocks: Array<Block>, grid: Grid): [Array<Bloc
  * @param functionsString string of `functionPrefix()` functions
  * @returns an array of `Block`'s blocks with their positions on the grid
  */
-export function getBlocksWithPosition(functionsString: string, functionPrefix = "ab_drop("): [Array<Block>, Grid] {
+export function getBlocksWithPosition(functionsString: string, functionPrefix = 'ab_drop('): [Array<Block>, Grid] {
   const blocks = [];
   let grid = initializeGrid(GRID_WIDTH, GRID_HEIGHT);
 
@@ -144,7 +144,7 @@ export function getBlocksWithPosition(functionsString: string, functionPrefix = 
  * @param line line of `functionPrefix()` function
  * @returns the block type of the block
  */
-function getBlockTypeFromLine(line: string, functionPrefix = "ab_drop("): BlockType {
+function getBlockTypeFromLine(line: string, functionPrefix = 'ab_drop('): BlockType {
   const commaIndex = line.indexOf(',');
   const extractedBlockType = line.substring(functionPrefix.length + 1, commaIndex - 1).toUpperCase();
   const blockType = BlockType[extractedBlockType as keyof typeof BlockType];
