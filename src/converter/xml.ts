@@ -10,7 +10,7 @@ import {
 
 import BigNumber from 'bignumber.js';
 
-function convertToXML(functionsString: string, functionPrefix = 'ab_drop(') {
+function convertToXML(functionsString: string, functionPrefix = 'drop_block(') {
   let output = '<?xml version="1.0" encoding="utf-16"?>\n';
   const [gameObjectsXMLString, grid] = parseGameObjects(functionsString, functionPrefix);
   const levelWidth = getGridContentWidth(grid);
@@ -31,7 +31,7 @@ function convertToXML(functionsString: string, functionPrefix = 'ab_drop(') {
   return output;
 }
 
-function parseGameObjects(functionsString: string, functionPrefix = 'ab_drop('): [string, number[][], number[][]] {
+function parseGameObjects(functionsString: string, functionPrefix = 'drop_block('): [string, number[][], number[][]] {
   let xmlString = '';
   xmlString += `  <GameObjects>\n`;
 

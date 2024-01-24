@@ -11,7 +11,7 @@ export { Block, Position, Size, BlockType };
  * @param text text containing `functionPrefix` function calls
  * @returns a new string containing only the `functionPrefix` function calls
  */
-export function extractCode(text: string, functionPrefix = 'ab_drop'): string | null {
+export function extractCode(text: string, functionPrefix = 'drop_block'): string | null {
   const PATTERN = /```([^`]+)```/g;
   const CODE_PATTERN = new RegExp(`${functionPrefix}\\(['|"]b[1|3][1|3]['|"], *\\d*\\)`, 'g');
 
@@ -72,7 +72,7 @@ export function containObjectTokens(text: string): boolean {
  * @param text text of only `functionPrefix()` functions to convert to XML
  * @returns XML file represents a level in the Science Birds
  */
-export function convertTextToXML(text: string, functionPrefix = 'ab_drop(') {
+export function convertTextToXML(text: string, functionPrefix = 'drop_block(') {
   return convertToXML(text.toLowerCase(), functionPrefix);
 }
 
