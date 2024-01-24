@@ -1,6 +1,6 @@
 {
   "name": "chatgpt4pcg",
-  "version": "1.3.0",
+  "version": "1.4.0",
   "description": "This package contains a comprehensive set of utility functions utilized in scripts for the competition's evaluation process.",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
